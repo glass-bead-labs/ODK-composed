@@ -1,0 +1,2 @@
+Change back to 8080 (this is hard-coded into some of the javascript, it seems)
+Open port 8080 on the docker machine group on EC2
