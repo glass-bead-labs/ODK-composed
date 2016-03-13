@@ -1,7 +1,7 @@
 aggregate:
     image: kharatsa/odkaggregate
     ports:
-        - "80:8080"
+        - "8080:8080"
     links:
         - odkdb
     environment:
