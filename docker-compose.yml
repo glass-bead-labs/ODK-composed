@@ -1,21 +1,28 @@
 aggregate:
     image: kharatsa/odkaggregate
+    mem_limit: 512m
     ports:
         - "8080:8080"
     links:
         - odkdb
     environment:
-        # Supposed to have a default, but get an unbound variable in run.sh
-        # line 33
+        # odkdb is supposed to be a default, but get an unbound variable in
+        # run.sh line 33 if not specified
         DB_CONTAINER_NAME: odkdb
         MYSQL_DATABASE: odk
         MYSQL_USER: odk
+        # Don't care if this is insecure, as there's no route to outside world
         MYSQL_PASSWORD: insecure
+        # This needs to get set explicitly, see `run_compose.sh` for cleverness
         ODK_HOSTNAME: ${HOSTIP}
-        ODK_ADMIN_USERNAME: dav
+        # Assume you like your Unix username well enough. This may be an issue
+        # (need to be set) on Windows.
+        ODK_ADMIN_USERNAME: ${USER}
 
 odkdb:
-    image: mysql:5.7
+    # This is managed as a submodule
+    build: docker-mysql-minimal
+    mem_limit: 512m
     environment:
         MYSQL_ROOT_PASSWORD: insecure
         MYSQL_DATABASE: odk

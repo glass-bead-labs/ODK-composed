@@ -1,0 +1,3 @@
+[submodule "docker-mysql-minimal"]
+	path = docker-mysql-minimal
+	url = git@github.com:glass-bead-labs/docker-mysql-minimal.git
