@@ -6,10 +6,19 @@
 # This doesn't appear to work by itself
 AWS_PROFILE=SHOzemi
 
+# You can get these with the following, but I don't want to parse JSON!
+# aws --profile $AWS_PROFILE ec2 describe-vpcs
+AWS_VPC_ID=vpc-fcde9a99
+
+# Apparently my account simply didn't have a subnet pre-configured in zone a
+# You can check *that* by noting the last letter of "AvailabilityZone"s here:
+# aws --profile SHOzemi ec2 describe-subnets
+AWS_ZONE=b
+
 # Nor does this (with 0.6.0, this is expected) by itself
 AWS_ACCESS_KEY_ID=$(aws --profile $AWS_PROFILE configure get aws_access_key_id)
 AWS_SECRET_ACCESS_KEY=$(aws --profile $AWS_PROFILE configure get aws_secret_access_key)
-REGION=$(aws --profile $AWS_PROFILE configure get region)
+AWS_DEFAULT_REGION=$(aws --profile $AWS_PROFILE configure get region)
 
 # This checked out fine
 # echo $AWS_PROFILE
@@ -21,7 +30,7 @@ REGION=$(aws --profile $AWS_PROFILE configure get region)
 docker-machine create -d amazonec2 \
     --amazonec2-access-key $AWS_ACCESS_KEY_ID \
     --amazonec2-secret-key $AWS_SECRET_ACCESS_KEY \
-    --amazonec2-region $REGION \
-    --amazonec2-vpc-id vpc-25582340 \
+    --amazonec2-region $AWS_DEFAULT_REGION \
+    --amazonec2-vpc-id $AWS_VPC_ID \
+    --amazonec2-zone $AWS_ZONE \
     sz-tokyo
-
