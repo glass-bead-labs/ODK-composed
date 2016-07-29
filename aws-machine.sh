@@ -4,7 +4,7 @@
 # https://docs.docker.com/machine/drivers/aws/
 
 # This doesn't appear to work by itself
-AWS_PROFILE=SHOzemi
+AWS_PROFILE=default
 
 # You can get these with the following, but I don't want to parse JSON!
 # aws --profile $AWS_PROFILE ec2 describe-vpcs
